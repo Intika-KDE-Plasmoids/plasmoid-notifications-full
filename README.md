@@ -8,6 +8,7 @@ Fork from KDE 5.8.7 Notification (org.kde.plasma.notifications)
 - Display unlimited notifications number (originally limited to 21 notifications max)
 - Keep all notifications on the history whether persistent or not
 - Support music players to avoid keeping music player notifications when you change song (only keep the last notification)
+- Exact same notification are only keeped once (same as original)
 
 ### Supported music players :
 clementine amarok rhythmbox audacious qmmp cmus spotify vlc DeaDBeeF Banshee gnome-music Lollypop gmusicbrowser Quod Libet Cantata Musique TOMAHAWK MOC Guayadeque Exaile Exaile Mopidy Banshee htingale juk MPlayer nuvolaplayer XMMS aqualung yarock Ocenaudio deepin-music 
@@ -24,5 +25,11 @@ This applet will remplace the original notification applet for the current user.
 
 ### Uninstall : 
 Just remove the applet from the plasma applet menu and you will get back your original notification applet
+
+### Testing 
+notify-send test
+
+### KDE 5 Notification Capture
+![alt text](https://www.tecmint.com/wp-content/uploads/2016/07/KDE-Plasma-Notifications-Window.png)
 
 Intika 
