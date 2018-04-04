@@ -1,4 +1,4 @@
-# Full Notification 
+# KDE Full Notifications Applet
 # org.kde.plasma.notifications.full
 
 Fork from KDE 5.8.7 Notification (org.kde.plasma.notifications) 
