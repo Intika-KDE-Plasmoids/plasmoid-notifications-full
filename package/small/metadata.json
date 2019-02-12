@@ -1,0 +1,33 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "mklapetek@kde.org",
+                "Name": "Martin Klapetek & Intika"
+            }
+        ],
+        "Category": "System Information",
+        "Description": "Display notifications and jobs",
+        "EnabledByDefault": true,
+        "Icon": "preferences-desktop-notification",
+        "Id": "org.kde.plasma.notifications",
+        "License": "GPL",
+        "Name": "Full Notifications",
+        "ServiceTypes": [
+            "Plasma/Applet"
+        ],
+        "Version": "3.5",
+        "Website": "http://plasma.kde.org/"
+    },
+    "X-KDE-ParentApp": "",
+    "X-Plasma-API": "declarativeappletscript",
+    "X-Plasma-MainScript": "ui/main.qml",
+    "X-Plasma-NotificationArea": "true",
+    "X-Plasma-NotificationAreaCategory": "SystemServices",
+    "X-Plasma-Provides": [
+        "org.kde.plasma.notifications"
+    ],
+    "X-Plasma-RequiredExtensions": [
+        "LaunchApp"
+    ]
+}

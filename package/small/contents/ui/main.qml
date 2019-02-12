@@ -32,11 +32,19 @@ import "uiproperties.js" as UiProperties
 
 MouseEventListener {
     id: notificationsApplet
+    
+    // Updater 1/3 ==================================================================================================================================
+    property string updateResponse;
+    property string currentVersion: '3.5';
+    property bool checkUpdateStartup: Plasmoid.configuration.checkUpdateStartup
+    // ==============================================================================================================================================
+
     //width: units.gridUnit.width * 10
     //height: units.gridUnit.width * 15
 
     //Layout.minimumWidth: mainScrollArea.implicitWidth
     //Layout.minimumHeight: mainScrollArea.implicitHeight
+    //WidthWidthWidthWidthWidthWidthWidthWidthWidthWidth
     Layout.minimumWidth: 256 // FIXME: use above
     Layout.minimumHeight: 256
     Layout.maximumWidth: -1
@@ -179,6 +187,59 @@ MouseEventListener {
     function action_notificationskcm() {
         ProcessRunner.runNotificationsKCM()
     }
+    
+    // Updater 2/3 ==================================================================================================================================
+    
+    PlasmaCore.DataSource {
+        id: executableNotification
+        engine: "executable"
+        onNewData: disconnectSource(sourceName) // cmd finished
+        function exec(cmd) {
+            connectSource(cmd)
+        }
+    }
+    
+    Timer {
+        id:timerStartUpdater
+        interval: 300000
+        onTriggered: updaterNotification(false)
+    }
+    
+    function availableUpdate() {
+        var notificationCommand = "notify-send --icon=plugin-notification 'Plasmoid Full Notifications' 'An update is available \n<a href=\"https://www.opendesktop.org/p/1227099/\">Update link</a>' -t 30000";
+        executableNotification.exec(notificationCommand);
+    }
+
+    function noAvailableUpdate() {
+        var notificationCommand = "notify-send --icon=plugin-notification 'Plasmoid Full Notifications' 'Your current version is up to date' -t 30000";
+        executableNotification.exec(notificationCommand);
+    }
+
+    function updaterNotification(notifyUpdated) {
+        var xhr = new XMLHttpRequest;
+        xhr.responseType = 'text';
+        xhr.open("GET", "https://raw.githubusercontent.com/Intika-Linux-Plasmoid/plasmoid-notifications-full/master/version");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == XMLHttpRequest.DONE) {
+                updateResponse = xhr.responseText;
+                console.log('.'+updateResponse+'.');
+                console.log('.'+currentVersion+'.');
+                //console.log('.'+xhr.status+'.');
+                //console.log('.'+xhr.statusText+'.');
+                if (updateResponse.localeCompare(currentVersion) && updateResponse.localeCompare('') && updateResponse.localeCompare('404: Not Found\n')) {
+                    availableUpdate();
+                } else if (notifyUpdated) {
+                    noAvailableUpdate();
+                }
+            }
+        };
+        xhr.send();
+    }
+    
+    function action_checkUpdate() {
+        updaterNotification(true);
+    }
+    // ==============================================================================================================================================
 
     Component.onCompleted: {
         plasmoid.setAction("clearNotifications", i18n("Clear Notifications"), "edit-clear")
@@ -189,5 +250,10 @@ MouseEventListener {
 
         //var allApplications = new Object
         plasmoid.setAction("notificationskcm", i18n("&Configure Event Notifications and Actions..."), "preferences-desktop-notification")
+        
+        // Updater 3/3 ==============================================================================================================================
+        plasmoid.setAction("checkUpdate", i18n("Check for updates on github"), "view-grid");
+        if (checkUpdateStartup) {timerStartUpdater.start();}
+        // ==========================================================================================================================================
     }
 }

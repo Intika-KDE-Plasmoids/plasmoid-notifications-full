@@ -28,4 +28,9 @@ ConfigModel {
          icon: "preferences-desktop-notification"
          source: "configNotifications.qml"
     }
+	ConfigCategory {
+		 name: i18n("Update")
+		 icon: "update-low"
+		 source: "configUpdater.qml"
+	}    
 }

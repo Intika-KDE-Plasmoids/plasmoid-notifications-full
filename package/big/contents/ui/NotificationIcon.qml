@@ -51,7 +51,8 @@ Item {
             width: notificationSvgItem.width * globalProgress
 
             clip: true
-            visible: jobs.count > 0
+            //intikamod
+            //visible: jobs.count > 0
 
             PlasmaCore.SvgItem {
                 anchors {
